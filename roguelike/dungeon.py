@@ -1,12 +1,12 @@
 #!/usr/bin/python3
 from sys import argv
-from random import choice
+from random import randint
 
 
 class World:
-    def __init__(self, width, height):
+    def __init__(self, width, height, walls):
         self.width, self.height = width, height
-        self.cells = [[True if choice(range(100)) < 40 else False
+        self.cells = [[True if randint(1, 100) < walls else False
                        for row in range(self.height)]
                       for column in range(self.width)]
 
@@ -44,6 +44,6 @@ class World:
         print(s)
 
 if __name__ == '__main__':
-    world = World(int(argv[1]), int(argv[2]))
-    world.evolve(int(argv[3]))
+    world = World(int(argv[1]), int(argv[2]), int(argv[3]))
+    world.evolve(int(argv[4]))
     world.draw()
