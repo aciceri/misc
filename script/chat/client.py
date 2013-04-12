@@ -1,0 +1,3 @@
+import socket
+
+host = 'localhost'
