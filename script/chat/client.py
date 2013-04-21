@@ -1,3 +1,0 @@
-import socket
-
-host = 'localhost'
