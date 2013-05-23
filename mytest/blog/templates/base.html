@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="it">
+	<head>
+        <meta charset="utf-8" />
+        {% load staticfiles %}
+        <link rel="stylesheet" type="text/css" href="{% static "main.css" %}" />
+        <link rel="stylesheet" type="text/css" href="{% static "text.css" %}" />
+        <title>{% block page_title %}{% endblock %}</title>
+	</head>
+	<body>
+		<div>
+            <header>
+                <a href="/blog/">
+				    <h1>Il mio blog</h1>
+				    <h2>Storie di una vita passata</h2>
+                </a>        
+            </header>
+			<article>
+                {% block content %}{% endblock %}
+            </article>
+			<aside>
+				<form method="get" action="search">
+					<input type="search" size=16 placeholder="Cerca..." name="q" />
+					<input type="submit" value="Cerca" />				
+				</form>
+                <nav>
+					<h1>Pagine principali</h1>
+					<ul>
+						<li><a href="/blog/">Questo blog</a></li>
+						<li><a href="/blog/2">Chi sono</a></li>
+						<li><a href="all">Tutti gli articoli</a></li>
+				    </ul>
+                </nav> 
+                <nav>
+					<h1>Ultimi 5 articoli</h1>
+					<ul>
+                        {% for article in last_5_articles %}
+                        <li><a href="{{ article.id }}">{{ article.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav> 
+            </aside>    
+            <footer>
+                <p>
+                    <a href="mailto:andreaciceri96@gmail.com">Andrea Ciceri</a> - Contenuti soggetti a licenza d'uso 
+                    <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/">Creative Commons BY-NC-SA 3.0</a> (tranne dove diversamente specificato)
+                </p>
+			</footer>
+		</div>
+	</body>
+</html>

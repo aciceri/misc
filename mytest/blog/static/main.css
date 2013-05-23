@@ -1,0 +1,132 @@
+/* EXTERNAL FONTS */
+@font-face {
+	font-family: "dejavu-serif";
+	src: url("dejavu-serif.ttf");
+}
+@font-face {
+	font-family: "dejavu-sans";
+	src: url("dejavu-sans.ttf");
+}
+
+
+
+/* BODY & MAIN DIV */
+body {
+	margin: 0px;
+	background-color: white;
+}
+div {
+	margin: 0px auto;
+	background-color: white;
+	width: 980px;
+}
+
+
+
+/* HEADER */
+header {
+	border-bottom: 1px solid #AAA;
+	padding: 10px;
+	text-align: left;
+	font-family: "dejavu-serif";
+}
+
+header a {
+    text-decoration: none;
+    color: black;
+}
+
+header h1 {
+	display: inline;
+	margin: 0px;
+	font-size: 4em;
+}
+
+header h2 {
+	display: inline;
+	margin: 0px;
+	font-size: 1.2em;
+}
+
+
+
+/* ASIDE */
+aside {
+	float: right;
+	width:  220px;
+	padding: 0px 0px 30px;
+}
+
+aside form {
+	text-align: center;
+	margin: 25px 2px 10px;
+}
+
+
+
+/* NAV */
+nav {
+	border-bottom: 1px dotted #AAA;
+}
+
+nav h1{
+	padding: 20px 10px 5px 10px;
+	margin: 0px;
+	font-family: "dejavu-serif";
+	font-weight: bold;
+	font-size: 1em;
+	text-align: left;
+}
+
+nav ul{
+	margin: 0px;
+	padding: 0px;
+	list-style: none;
+}
+
+nav li{
+	border-top: 1px dotted #AAA;
+}
+
+nav a:link, nav a:visited{
+	display: block;
+	color: black;
+	padding: 4px  10px;
+	text-align: left;
+	font-family: "dejavu-sans";
+	font-size: 0.9em;
+	text-decoration: none;
+
+}
+
+nav a:hover, nav a:focus, nav a:active{
+	color: blue;
+}
+
+
+
+/* FOOTER */
+footer {
+	clear: both;
+	padding: 4px 0px;
+	border-top: solid 1px #AAA;
+	text-align: center;
+	width: 100%;
+}
+
+footer p {
+	font-family: "dejavu-sans";
+	font-style: normal;
+	font-weight: lighter;
+	font-size: 0.8em;
+	margin: 0px;
+}
+
+footer a {
+	color: blue;
+	text-decoration: none;
+}
+
+footer a:hover {
+	text-decoration: underline;
+}

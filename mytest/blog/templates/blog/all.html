@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block page_title %}Tutti gli articoli - {{ articles|length }} articoli presenti{% endblock %}
+{% block content %}
+    {% if articles %}
+    <h1>Archivio articoli</h1>
+    <p>Al momento sono presenti {{ articles|length }} articoli.</p>
+    <table>
+        <tr>
+            <td>Articolo</td><td>Data</td><td>Tags</td>
+        </tr>
+    {% for article in articles %}
+        <tr>
+            <td><a href="{{ article.id }}">{{ article.title }}</a></td><td>{{ article.pub_date|date:"d-m-Y" }}</td>
+        </tr>
+    {% endfor %}
+    </table>    
+    {% else %}
+    <p>Al momento non è presente nessun articolo.</p>
+    {% endif %}
+{% endblock %}

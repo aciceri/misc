@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block page_title %}Ricerca di {{ query }}{% endblock %}
+{% block content %}
+    {% if articles %}
+    <p>Hai cercato gli articoli contenenti "{{ query }}":</p>
+        <ul>
+        {% for article in articles %}
+            <li><a href="{{ article.id }}">{{ article.title }}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+    <p>La ricerca non ha prodotto risultati... :(</p>
+    {% endif %}
+{% endblock %}
