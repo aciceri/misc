@@ -6,9 +6,10 @@ class Host:
         self.hostname = scanner[host].hostname()
         self.ip = host
         self.state = scanner[host].state()
-        self.protocols = []
-        for protocol in scanner[host].all_protocols():
-            self.protocols.append([protocol, scanner[host][protocol].keys()])
+        if scanner[host].has_tcp(22) or scanner[host].has_tcp(23):
+            self.ports = list(scanner[host]['tcp'].keys())
+        else:
+            self.ports = None
 
     def __repr__(self):
         return self.ip
