@@ -9,6 +9,7 @@ Un semplice logger che utilizza nmap per scansionare la rete e che poi salva i r
 + Python 3
 + Nmap (il classico programma da linea di comando)
 + Python-nmap (modulo python per interfacciarsi con nmap)
++ SQLAlchemy (modulo python per interfacciarsi con il database)
 
 ## Struttura ##
 
