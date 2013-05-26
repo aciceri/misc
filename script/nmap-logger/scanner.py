@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from os import popen
 from xml.etree import ElementTree
 
@@ -14,7 +12,7 @@ class Host:
         self.ports = ports
 
     def __repr__(self):
-        return '%s - %s' % (self.ip, self.os)
+        return self.ip
 
 
 class NmapScanner:
