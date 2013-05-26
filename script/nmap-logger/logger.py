@@ -1,42 +1,54 @@
-from sqlalchemy import create_engine, Column, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
+import sqlite3
 
 
 class Database:
+    def __init__(self, db_name, table_name):
+        self.db_name = db_name
+        self.table_name = table_name
 
-    engine = create_engine('sqlite:///nmap-logger.db', echo=True)
-    Base = declarative_base()
+        self.conn = sqlite3.connect(db_name)
+        self.cur = self.conn.cursor()
 
-    Session = sessionmaker(bind=engine)
-    session = Session()
+        query = '''CREATE TABLE IF NOT EXISTS %s(
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    ip TEXT,
+                    mac TEXT,
+                    vendor TEXT,
+                    hostname TEXT,
+                    os TEXT,
+                    ports TEXT)''' % self.table_name
+        self.cur.execute(query)
+        self.cur.close()
 
-    class Host(Base):
-        __tablename__ = 'hosts'
+    def __repr__(self):
+        return '<Db: %s, Table: %s>' % (self.db_name, self.table_name)
 
-        id = Column(Integer, primary_key=True)
-        ip = Column(String)
-        mac = Column(String)
-        vendor = Column(String)
-        hostname = Column(String)
-        os = Column(String)
+    def add_hosts(self, lhost):
+        self.cur = self.conn.cursor()
+        for host in lhost:
+            ip = host.ip
+            mac = host.mac
+            vendor = host.vendor
+            hostname = host.hostname
+            os = host.os
+            ports = str(host.ports)
 
-        def __init__(self, ip, mac, vendor, hostname, os):
-            self.ip = ip
-            self.mac = mac
-            self.vendor = vendor
-            self.hostname = hostname
-            self.os = os
+            query = '''INSERT INTO %s(ip, mac, vendor, hostname, os, ports)
+                        VALUES (?, ?, ?, ?, ?, ?)''' % self.table_name
 
-        def __repr__(self):
-            return self.ip
+            self.cur.execute(query, [ip, mac, vendor, hostname, os, ports])
 
-    Base.metadata.create_all(engine)
+        self.cur.close()
+        self.conn.commit()
 
-    def __init__(self):
-        pass
+    def all_hosts(self):
+        self.cur = self.conn.cursor()
+        query = 'SELECT * FROM %s' % self.table_name
+        self.cur.execute(query)
 
-    def add_host(self, ip, mac, vendor, hostname, os):
-        new_host = self.Host(ip, mac, vendor, hostname, os)
-        self.session.add(new_host)
-        self.session.commit()
+        hosts = []
+        for host in self.cur:
+            hosts.append(host)
+
+        self.cur.close()
+        return hosts

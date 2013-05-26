@@ -1,4 +1,10 @@
-from http.server import HTTPServer
+import cherrypy
 
-httpd = HTTPServer(('127.0.0.1', 8000), pass)
-httpd.serve_forever()
+class Gui:
+
+    @cherrypy.expose
+    def index(self):
+        return 'Ciao mondo!'
+
+
+cherrypy.quickstart(Gui())
