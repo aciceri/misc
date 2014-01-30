@@ -17,6 +17,7 @@ def main(stdscr, filename, playerX, playerY):
 	dijkstra.find()
 	
 	while True:
+		stdscr.clear()
 		path = dijkstra.path(playerX, playerY)
 		for y, line in enumerate(dungeon.cells):
 			for x, cell in enumerate(line):
@@ -26,6 +27,7 @@ def main(stdscr, filename, playerX, playerY):
 					stdscr.addch(y, x, '@')
 				else:
 					stdscr.addch(y, x, cell.char)
+		stdscr.addstr(len(dungeon.cells), 0, str(len(path)))
 		key = stdscr.getkey()
 		if key == 'q':
 			break
