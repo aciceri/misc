@@ -15,9 +15,10 @@ def main(filename):
 
     dijkstra = Dijkstra(dungeon, Ax, Ay)
     dijkstra.find()
-    path = dijkstra.path(Bx, By)
-    dijkstra.show(path)
-
+    path = dijkstra.pathFrom(Bx, By)
+    print(list(path))
+    #for cell in path:
+    #    print('%s %s' % (cell.x, cell.y))
 
 if __name__ == '__main__':
     if len(argv) == 2:
