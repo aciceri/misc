@@ -4,71 +4,63 @@ from dijkstra import Dungeon, Dijkstra
 import curses
 
 
-def main(stdscr, filename, playerX, playerY):
+def main(stdscr, filename, player_x, player_y):
     curses.noecho()
     stdscr.keypad(True)
 
     for y, line in enumerate(open(filename, 'r').read()[:-1].split('\n')):
         for x, char in enumerate(line):
             if char == 'A':
-                goalAX, goalAY = x, y
-            elif char == 'B':
-                goalBX, goalBY = x, y
-            elif char == 'C':
-                goalCX, goalCY = x, y
-            elif char == 'D':
-                goalDX, goalDY = x, y
-            elif char == 'E':
-                goalEX, goalEY = x, y
+                goal_x, goal_y = x, y
 
     dungeon = Dungeon(filename)
+    dijkstra = Dijkstra(dungeon, goal_x, goal_y)
+    dijkstra.find()
 
     while True:
         stdscr.clear()
 
-        dijkstra = Dijkstra(dungeon, playerX, playerY)
-        dijkstra.find()
-        pathA = list(dijkstra.pathFrom(goalAX, goalAY))
-        #pathB = list(dijkstra.pathFrom(goalBX, goalBY))
+        #dijkstra.find()
+        path = list(dijkstra.pathFrom(player_x, player_y))
 
         for y, line in enumerate(dungeon.cells):
             for x, cell in enumerate(line):
-                if cell in pathA[1:]:
+                if cell in path[1:]:
                     stdscr.addch(y, x, '.')
-                elif x == playerX and y == playerY:
+                elif x == player_x and y == player_y:
                     stdscr.addch(y, x, '@')
                 else:
                     stdscr.addch(y, x, cell.char)
+        if len(path) != 0:
+            dist = path[0].dist
+        else:
+            dist = float('inf')
 
-        distA = len([c.dist for c in pathA] if pathA else [0])
-        #distB = len([c.dist for c in pathB] if pathB else [0])
-
-        stdscr.addstr(len(dungeon.cells), 0, 'A: %s' % str(distA))
-        #stdscr.addstr(len(dungeon.cells), 10, 'B: %s' % str(distB))
+        stdscr.addstr(20, 0, 'A: %s' % str(dist))
 
         key = stdscr.getkey()
         if key == 'q':
             break
         elif key == 'h' or key == 'a':
-            playerX -= 1
-            if playerX < 0:
-                playerX += 1
+            player_x -= 1
+            if player_x < 0:
+                player_x += 1
         elif key == 'l' or key == 'd':
-            playerX += 1
-            if playerX >= len(dungeon.cells[0]):
-                playerX -= 1
+            player_x += 1
+            if player_x >= len(dungeon.cells[0]):
+                player_x -= 1
         elif key == 'k' or key == 'w':
-            playerY -= 1
-            if playerY < 0:
-                playerY += 1
+            player_y -= 1
+            if player_y < 0:
+                player_y += 1
         elif key == 'j' or key == 's':
-            playerY += 1
-            if playerY > len(dungeon.cells) - 1:
-                playerY -= 1
+            player_y += 1
+            if player_y > len(dungeon.cells) - 1:
+                player_y -= 1
 
 
 if __name__ == '__main__':
     if len(argv) == 4:
         curses.wrapper(main, argv[1], *map(int, argv[2:]))
     else:
-        print('Usage: %s X Y' % argv[0])
+        print('Usage: %s FILENAME X Y' % argv[0])

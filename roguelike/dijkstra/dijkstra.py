@@ -1,6 +1,3 @@
-from heapq import heappush, heappop
-
-
 class Cell:
     def __init__(self, x, y, char):
         self.x, self.y = x, y
@@ -55,18 +52,16 @@ class Dijkstra:
 
     def find(self):
         self.dungeon.cells[self.start_y][self.start_x].dist = 0
-        self.q = []
-        for cell in sorted(cell for c in self.dungeon.cells for cell in c):
-            heappush(self.q, self.dungeon.cells[cell.y][cell.x])
+        self.q = [cell for c in self.dungeon.cells for cell in c]
 
         while self.q:  # While q is not empty
-            u = heappop(self.q)
+            u = min(self.q)
+            self.q.remove(u)
 
             for cell in self.dungeon.adjacent(u):
                 dist = self.dungeon.distance(u, cell)
 
                 if dist < cell.dist:
-                    print(dist)
                     cell.dist = dist
                     cell.parent = u
 
